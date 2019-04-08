@@ -61,6 +61,10 @@
     } else {
         NSURL *imageUrl = [NSURL URLWithString:imageSanitized];
         imageData = [[NSData alloc] initWithContentsOfURL: imageUrl];
+        if(imageData == nil)
+        {
+            imageData = [[NSData alloc] initWithBase64EncodedString:image options:0];
+        }
     }
     
     tensorflow::Tensor tensor = createImageTensor(imageData, [imageType UTF8String], [inputSizeResolved floatValue], [imageMean floatValue], [imageStd floatValue]);
